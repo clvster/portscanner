@@ -54,5 +54,8 @@ func validate(cfg *types.Config) error {
 	if cfg.Scan.Rate <= 0 {
 		return fmt.Errorf("scan.rate must be positive")
 	}
+	if cfg.Database.DSN == "" {
+		return fmt.Errorf("database.dsn is empty")
+	}
 	return nil
 }
