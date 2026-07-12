@@ -1,0 +1,47 @@
+services:
+  db:
+    image: postgres:18-alpine3.24
+    environment:
+      POSTGRES_USER: scanner
+      POSTGRES_PASSWORD: scanner
+      POSTGRES_DB: portscanner
+    ports:
+      - "127.0.0.1:5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U scanner -d portscanner"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+    networks:
+      - scannet
+
+  target-nginx:
+    image: nginx:alpine
+    networks:
+      - scannet
+
+  target-redis:
+    image: redis:alpine
+    networks:
+      - scannet
+
+  scanner:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+      target-nginx:
+        condition: service_started
+      target-redis:
+        condition: service_started
+    cap_add:
+      - NET_RAW
+      - NET_ADMIN
+    environment:
+      DATABASE_DSN: "postgres://scanner:scanner@db:5432/portscanner?sslmode=disable"
+    networks:
+      - scannet
+
+networks:
+  scannet:
+    driver: bridge
