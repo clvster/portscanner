@@ -10,7 +10,9 @@ import (
 
 	"portscanner/config"
 	"portscanner/db"
+	"portscanner/services/notifier"
 	"portscanner/services/scanner"
+	"portscanner/types"
 )
 
 func main() {
@@ -36,6 +38,8 @@ func main() {
 	}
 	log.Println("db connected and migrated")
 
+	notify := notifier.NewTelegram(cfg.Telegram.Token, cfg.Telegram.ChatID)
+
 	log.Printf("targets=%v ports=%s rate=%d", cfg.Scan.Targets, cfg.Scan.Ports, cfg.Scan.Rate)
 
 	sc := scanner.New(cfg.Scan.Rate)
@@ -52,26 +56,32 @@ func main() {
 	}
 
 	log.Printf("found %d open port(s):", len(ports))
-	newCount := 0
+	var newPorts []types.OpenPort
 	for _, p := range ports {
 		isNew, err := database.UpsertPort(ctx, p)
 		if err != nil {
 			log.Printf("  upsert %s: %v", p.Key(), err)
 			continue
 		}
-
 		state := "seen"
-
 		if isNew {
 			state = "NEW"
-			newCount++
+			newPorts = append(newPorts, p)
 		}
-
 		if p.Service != "" {
 			log.Printf("  [%s] %s:%d/%s service=%s banner=%q", state, p.IP, p.Port, p.Proto, p.Service, p.Banner)
 		} else {
 			log.Printf("  [%s] %s:%d/%s", state, p.IP, p.Port, p.Proto)
 		}
 	}
-	log.Printf("scan complete: %d new, %d total", newCount, len(ports))
+
+	log.Printf("scan complete: %d new, %d total", len(newPorts), len(ports))
+
+	if len(newPorts) > 0 {
+		if err := notify.Notify(ctx, newPorts); err != nil {
+			log.Printf("notify: %v", err)
+		} else {
+			log.Printf("notified about %d new port(s)", len(newPorts))
+		}
+	}
 }

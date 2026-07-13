@@ -57,5 +57,8 @@ func validate(cfg *types.Config) error {
 	if cfg.Database.DSN == "" {
 		return fmt.Errorf("database.dsn is empty")
 	}
+	if cfg.Telegram.Token == "" || cfg.Telegram.ChatID == 0 {
+		return fmt.Errorf("telegram token/chat_id required")
+	}
 	return nil
 }
