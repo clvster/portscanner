@@ -12,14 +12,16 @@ import (
 )
 
 type Masscan struct {
-	binary string
-	rate   int
+	binary   string
+	rate     int
+	sourceIP string
 }
 
-func New(rate int) *Masscan {
+func New(rate int, sourceIP string) *Masscan {
 	return &Masscan{
-		binary: "masscan",
-		rate:   rate,
+		binary:   "masscan",
+		rate:     rate,
+		sourceIP: sourceIP,
 	}
 }
 
@@ -39,6 +41,11 @@ func (m *Masscan) Scan(ctx context.Context, targets []string, ports string) ([]t
 		"--open-only",
 		"-oJ", outPath,
 	}
+
+	if m.sourceIP != "" {
+		args = append(args, "--source-ip", m.sourceIP)
+	}
+
 	args = append(args, targets...)
 
 	cmd := exec.CommandContext(ctx, m.binary, args...)

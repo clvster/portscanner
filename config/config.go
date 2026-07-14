@@ -48,17 +48,26 @@ func validate(cfg *types.Config) error {
 	if len(cfg.Scan.Targets) == 0 {
 		return fmt.Errorf("scan.targets is empty")
 	}
+
 	if cfg.Scan.Ports == "" {
 		return fmt.Errorf("scan.ports is empty")
 	}
+
 	if cfg.Scan.Rate <= 0 {
 		return fmt.Errorf("scan.rate must be positive")
 	}
+
+	if !cfg.Scan.Once && cfg.Scan.Interval <= 0 {
+		return fmt.Errorf("scan interval must be positive when once=false")
+	}
+
 	if cfg.Database.DSN == "" {
 		return fmt.Errorf("database.dsn is empty")
 	}
+
 	if cfg.Telegram.Token == "" || cfg.Telegram.ChatID == 0 {
 		return fmt.Errorf("telegram token/chat_id required")
 	}
+
 	return nil
 }

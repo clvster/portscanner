@@ -12,6 +12,7 @@ type ScanConfig struct {
 	Targets  []string      `yaml:"targets"`
 	Ports    string        `yaml:"ports"`
 	Rate     int           `yaml:"rate"`
+	SourceIP string        `yaml:"source_ip"`
 	Interval time.Duration `yaml:"interval"`
 	Once     bool          `yaml:"once"`
 }
