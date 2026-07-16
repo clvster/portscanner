@@ -1,0 +1,5 @@
+ALTER TABLE open_ports
+    DROP COLUMN IF EXISTS product,
+    DROP COLUMN IF EXISTS version,
+    DROP COLUMN IF EXISTS cpe,
+    DROP COLUMN IF EXISTS cves;

@@ -4,6 +4,8 @@ import (
 	"context"
 	"embed"
 	"fmt"
+	"sort"
+	"strings"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 )
@@ -34,13 +36,29 @@ func (d *DB) Close() {
 }
 
 func (d *DB) Migrate(ctx context.Context) error {
-	data, err := migrationsFS.ReadFile("migrations/0001_init.up.sql")
+	entries, err := migrationsFS.ReadDir("migrations")
 	if err != nil {
-		return fmt.Errorf("read migration: %w", err)
+		return fmt.Errorf("read migrations dir: %w", err)
 	}
 
-	if _, err := d.pool.Exec(ctx, string(data)); err != nil {
-		return fmt.Errorf("apply migration: %w", err)
+	var files []string
+	for _, e := range entries {
+		if strings.HasSuffix(e.Name(), ".up.sql") {
+			files = append(files, e.Name())
+		}
+	}
+
+	sort.Strings(files)
+
+	for _, name := range files {
+		data, err := migrationsFS.ReadFile("migrations/" + name)
+		if err != nil {
+			return fmt.Errorf("read %s: %w", name, err)
+		}
+
+		if _, err := d.pool.Exec(ctx, string(data)); err != nil {
+			return fmt.Errorf("apply %s: %w", name, err)
+		}
 	}
 
 	return nil

@@ -8,6 +8,10 @@ type OpenPort struct {
 	Proto     string
 	Service   string
 	Banner    string
+	Product   string
+	Version   string
+	CPE       string
+	CVEs      []string
 	FirstSeen time.Time
 	LastSeen  time.Time
 }
