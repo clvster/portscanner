@@ -6,7 +6,7 @@ COPY . .
 RUN go build -o /out/scanner ./cmd/scanner
 
 FROM alpine:3.24
-RUN apk add --no-cache masscan libcap && \
+RUN apk add --no-cache masscan nmap nmap-scripts libcap && \
     setcap cap_net_raw,cap_net_admin=eip $(which masscan)
 COPY --from=build /out/scanner /usr/local/bin/scanner
 COPY config /app/config

@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"portscanner/db"
+	"portscanner/services/enricher"
 	"portscanner/services/notifier"
 	"portscanner/services/scanner"
 	"portscanner/types"
@@ -13,15 +14,17 @@ import (
 
 type Scheduler struct {
 	scanner  *scanner.Masscan
+	enricher *enricher.Nmap
 	db       *db.DB
 	notifier notifier.Notifier
 	targets  []string
 	ports    string
 }
 
-func New(sc *scanner.Masscan, database *db.DB, n notifier.Notifier, targets []string, ports string) *Scheduler {
+func New(sc *scanner.Masscan, en *enricher.Nmap, database *db.DB, n notifier.Notifier, targets []string, ports string) *Scheduler {
 	return &Scheduler{
 		scanner:  sc,
+		enricher: en,
 		db:       database,
 		notifier: n,
 		targets:  targets,
@@ -42,13 +45,16 @@ func (s *Scheduler) RunOnce(ctx context.Context) error {
 		return nil
 	}
 
+	ports = s.enricher.Enrich(ctx, ports)
+
 	log.Printf("found %d open port(s):", len(ports))
 	var newPorts []types.OpenPort
 
 	for _, p := range ports {
 		isNew, err := s.db.UpsertPort(ctx, p)
 		if err != nil {
-			log.Printf("    upsert %s: %v", p.Key(), err)
+			log.Printf("  upsert %s: %v", p.Key(), err)
+			continue
 		}
 
 		state := "seen"
@@ -58,14 +64,21 @@ func (s *Scheduler) RunOnce(ctx context.Context) error {
 			newPorts = append(newPorts, p)
 		}
 
-		if p.Service != "" {
-			log.Printf("    [%s] %s:%d/%s service=%s banner=%q", state, p.IP, p.Port, p.Proto, p.Service, p.Banner)
-		} else {
-			log.Printf("    [%s] %s:%d/%s", state, p.IP, p.Port, p.Proto)
+		desc := ""
+		if p.Product != "" {
+			desc = " " + p.Product
+			if p.Version != "" {
+				desc += " " + p.Version
+			}
+		} else if p.Service != "" {
+			desc = " service=" + p.Service
 		}
+
+		log.Printf("  [%s] %s:%d/%s%s", state, p.IP, p.Port, p.Proto, desc)
 	}
 
 	log.Printf("scan complete: %d new, %d total", len(newPorts), len(ports))
+
 	if len(newPorts) > 0 {
 		if err := s.notifier.Notify(ctx, newPorts); err != nil {
 			log.Printf("notify: %v", err)

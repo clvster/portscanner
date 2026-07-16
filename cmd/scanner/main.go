@@ -9,6 +9,7 @@ import (
 
 	"portscanner/config"
 	"portscanner/db"
+	"portscanner/services/enricher"
 	"portscanner/services/notifier"
 	"portscanner/services/scanner"
 	"portscanner/services/scheduler"
@@ -38,8 +39,9 @@ func main() {
 	log.Println("db connected and migrated")
 
 	sc := scanner.New(cfg.Scan.Rate, cfg.Scan.SourceIP)
+	en := enricher.NewNmap()
 	notify := notifier.NewTelegram(cfg.Telegram.Token, cfg.Telegram.ChatID)
-	sched := scheduler.New(sc, database, notify, cfg.Scan.Targets, cfg.Scan.Ports)
+	sched := scheduler.New(sc, en, database, notify, cfg.Scan.Targets, cfg.Scan.Ports)
 
 	log.Printf("targets=%v ports=%s rate=%d", cfg.Scan.Targets, cfg.Scan.Ports, cfg.Scan.Rate)
 
