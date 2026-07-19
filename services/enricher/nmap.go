@@ -6,16 +6,18 @@ import (
 	"os/exec"
 	"strconv"
 	"strings"
+	"sync"
 
 	"portscanner/types"
 )
 
 type Nmap struct {
-	binary string
+	binary      string
+	concurrency int
 }
 
 func NewNmap() *Nmap {
-	return &Nmap{binary: "nmap"}
+	return &Nmap{binary: "nmap", concurrency: 8}
 }
 
 func (n *Nmap) Enrich(ctx context.Context, ports []types.OpenPort) []types.OpenPort {
@@ -29,15 +31,33 @@ func (n *Nmap) Enrich(ctx context.Context, ports []types.OpenPort) []types.OpenP
 	}
 
 	found := make(map[string]enriched)
+	var mu sync.Mutex
+	var wg sync.WaitGroup
+	sem := make(chan struct{}, n.concurrency)
+
 	for ip, portList := range byIP {
-		results, err := n.scanHost(ctx, ip, portList)
-		if err != nil {
-			continue
-		}
-		for _, e := range results {
-			found[e.IP+":"+strconv.Itoa(e.Port)+"/"+e.Proto] = e
-		}
+		wg.Add(1)
+
+		go func(ip string, portList []int) {
+			defer wg.Done()
+			sem <- struct{}{}
+			defer func() { <-sem }()
+
+			results, err := n.scanHost(ctx, ip, portList)
+			if err != nil {
+				return
+			}
+
+			mu.Lock()
+			for _, e := range results {
+				found[e.IP+":"+strconv.Itoa(e.Port)+"/"+e.Proto] = e
+			}
+
+			mu.Unlock()
+		}(ip, portList)
 	}
+
+	wg.Wait()
 
 	out := make([]types.OpenPort, len(ports))
 	for i, p := range ports {
@@ -46,6 +66,7 @@ func (n *Nmap) Enrich(ctx context.Context, ports []types.OpenPort) []types.OpenP
 			if p.Service == "" {
 				out[i].Service = e.Service
 			}
+
 			out[i].Product = e.Product
 			out[i].Version = e.Version
 			out[i].CPE = e.CPE
