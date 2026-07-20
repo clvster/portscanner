@@ -1,0 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1560 3740" width="1560" height="3740">
+<defs>
+<marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M 0 0 L 10 5 L 0 10 z" fill="#000000"/>
+</marker>
+</defs>
+<rect width="1560" height="3740" fill="#ffffff"/>
+<text x="780.0" y="28" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold">Алгоритмическая схема работы автоматизированного сканера открытых портов</text>
+<text x="780.0" y="52" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#333333">Masscan + Nmap + PostgreSQL + Telegram Bot API</text>
+<rect x="730" y="96" width="200" height="50" rx="25.0" ry="25.0" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="830.0" y="121.0" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Начало</text>
+<polygon points="568.0,186 1110.0,186 1092.0,256 550.0,256" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="830.0" y="204.75" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="13" font-weight="normal">Чтение файла конфигурации</text>
+<text x="830.0" y="221.0" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">config.yaml: диапазоны адресов, порты, скорость,</text>
+<text x="830.0" y="237.25" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">адрес источника, интервал, режим запуска</text>
+<line x1="830" y1="146" x2="830" y2="186" stroke="#000000" stroke-width="2" marker-end="url(#ah)"/>
+<rect x="550.0" y="306" width="560" height="70" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="830.0" y="332.875" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="13" font-weight="normal">Переопределение параметров из окружения</text>
+<text x="830.0" y="349.125" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">DATABASE_DSN, TELEGRAM_TOKEN, TELEGRAM_CHAT_ID</text>
+<line x1="830" y1="256" x2="830" y2="306" stroke="#000000" stroke-width="2" marker-end="url(#ah)"/>
+<polygon points="830.0,426 1090.0,480.0 830.0,534 570.0,480.0" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="830.0" y="465.0" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="12" font-weight="normal">Параметры корректны?</text>
+<text x="830.0" y="480.0" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="10" font-weight="normal">заданы цели, порты, скорость,</text>
+<text x="830.0" y="495.0" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="10" font-weight="normal">строка подключения и учётные данные</text>
+<line x1="830" y1="376" x2="830" y2="426" stroke="#000000" stroke-width="2" marker-end="url(#ah)"/>
+<rect x="550.0" y="594" width="560" height="88" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="830.0" y="613.625" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="13" font-weight="normal">Подключение к PostgreSQL</text>
+<text x="830.0" y="629.875" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">создание пула соединений pgx</text>
+<text x="830.0" y="646.125" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">последовательное применение миграций</text>
+<text x="830.0" y="662.375" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">0001_init, 0002_enrich</text>
+<line x1="830" y1="534" x2="830" y2="594" stroke="#000000" stroke-width="2" marker-end="url(#ah)"/>
+<text x="842" y="560" font-family="Arial, sans-serif" font-size="12" font-weight="bold">да</text>
+<rect x="550.0" y="732" width="560" height="70" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="830.0" y="750.75" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="13" font-weight="normal">Создание компонентов системы</text>
+<text x="830.0" y="767.0" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">сканер Masscan, определитель версий Nmap,</text>
+<text x="830.0" y="783.25" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">уведомитель Telegram, планировщик</text>
+<line x1="830" y1="682" x2="830" y2="732" stroke="#000000" stroke-width="2" marker-end="url(#ah)"/>
+<polygon points="572.0,852 1088.0,852 1110.0,883.0 1088.0,914 572.0,914 550.0,883.0" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="830.0" y="883.0" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="12" font-weight="normal">Начало цикла сканирования</text>
+<line x1="830" y1="802" x2="830" y2="852" stroke="#000000" stroke-width="2" marker-end="url(#ah)"/>
+<rect x="550.0" y="964" width="560" height="124" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="830.0" y="985.375" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Сканирование Masscan</text>
+<text x="830.0" y="1001.625" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">создание временного файла вывода</text>
+<text x="830.0" y="1017.875" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">аргументы запуска: -p &lt;ports&gt;  --rate &lt;N&gt;</text>
+<text x="830.0" y="1034.125" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">--banners  --open-only  --source-ip  -oJ</text>
+<text x="830.0" y="1050.375" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">многопоточный SYN-скан заданных диапазонов</text>
+<text x="830.0" y="1066.625" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">захват баннеров служб на стандартных портах</text>
+<line x1="830" y1="914" x2="830" y2="964" stroke="#000000" stroke-width="2" marker-end="url(#ah)"/>
+<polygon points="830.0,1138 1090.0,1192.0 830.0,1246 570.0,1192.0" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="830.0" y="1177.0" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="12" font-weight="normal">Masscan завершён</text>
+<text x="830.0" y="1192.0" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="12" font-weight="normal">без ошибок?</text>
+<text x="830.0" y="1207.0" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="10" font-weight="normal">проверка кода возврата процесса</text>
+<line x1="830" y1="1088" x2="830" y2="1138" stroke="#000000" stroke-width="2" marker-end="url(#ah)"/>
+<rect x="550.0" y="1306" width="560" height="124" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="830.0" y="1327.375" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Разбор результатов сканирования</text>
+<text x="830.0" y="1343.625" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">чтение и удаление временного файла</text>
+<text x="830.0" y="1359.875" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">десериализация массива записей JSON</text>
+<text x="830.0" y="1376.125" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">пропуск служебных записей без адреса узла</text>
+<text x="830.0" y="1392.375" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">объединение записей открытого порта и баннера</text>
+<text x="830.0" y="1408.625" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">по общему ключу ip:port/proto</text>
+<line x1="830" y1="1246" x2="830" y2="1306" stroke="#000000" stroke-width="2" marker-end="url(#ah)"/>
+<text x="842" y="1272" font-family="Arial, sans-serif" font-size="12" font-weight="bold">да</text>
+<polygon points="830.0,1480 1090.0,1534.0 830.0,1588 570.0,1534.0" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="830.0" y="1534.0" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="12" font-weight="normal">Найдены открытые порты?</text>
+<line x1="830" y1="1430" x2="830" y2="1480" stroke="#000000" stroke-width="2" marker-end="url(#ah)"/>
+<rect x="550.0" y="1648" width="560" height="140" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="830.0" y="1669.25" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Определение версий служб (Nmap)</text>
+<text x="830.0" y="1685.5" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">группировка обнаруженных портов по узлам</text>
+<text x="830.0" y="1701.75" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">параллельный запуск подпрограмм в горутинах</text>
+<text x="830.0" y="1718.0" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">семафор: не более 8 одновременных процессов</text>
+<text x="830.0" y="1734.25" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">nmap -sV -Pn -p &lt;ports&gt; -oX -</text>
+<text x="830.0" y="1750.5" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">разбор XML: product, version, cpe</text>
+<text x="830.0" y="1766.75" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">запись результатов под защитой мьютекса</text>
+<line x1="830" y1="1588" x2="830" y2="1648" stroke="#000000" stroke-width="2" marker-end="url(#ah)"/>
+<text x="842" y="1614" font-family="Arial, sans-serif" font-size="12" font-weight="bold">да</text>
+<polygon points="572.0,1838 1088.0,1838 1110.0,1869.0 1088.0,1900 572.0,1900 550.0,1869.0" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="830.0" y="1869.0" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="12" font-weight="normal">Цикл по обнаруженным портам</text>
+<line x1="830" y1="1788" x2="830" y2="1838" stroke="#000000" stroke-width="2" marker-end="url(#ah)"/>
+<rect x="550.0" y="1950" width="560" height="124" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="830.0" y="1979.5" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Сохранение в таблицу open_ports</text>
+<text x="830.0" y="1995.75" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">INSERT INTO open_ports (...)</text>
+<text x="830.0" y="2012.0" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">ON CONFLICT (ip, port, proto) DO UPDATE SET</text>
+<text x="830.0" y="2028.25" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">last_seen, service, banner, product, version, cpe</text>
+<text x="830.0" y="2044.5" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">RETURNING (xmax = 0)</text>
+<line x1="830" y1="1900" x2="830" y2="1950" stroke="#000000" stroke-width="2" marker-end="url(#ah)"/>
+<polygon points="830.0,2124 1090.0,2178.0 830.0,2232 570.0,2178.0" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="830.0" y="2163.0" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="12" font-weight="normal">Признак xmax = 0?</text>
+<text x="830.0" y="2178.0" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="10" font-weight="normal">порт обнаружен впервые</text>
+<text x="830.0" y="2193.0" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="10" font-weight="normal">и ранее не встречался</text>
+<line x1="830" y1="2074" x2="830" y2="2124" stroke="#000000" stroke-width="2" marker-end="url(#ah)"/>
+<rect x="340" y="2292" width="460" height="88" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="570.0" y="2319.75" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="13" font-weight="normal">Добавление в список новых</text>
+<text x="570.0" y="2336.0" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">отметка состояния NEW</text>
+<text x="570.0" y="2352.25" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">фиксирование новой угрозы</text>
+<rect x="860" y="2292" width="460" height="88" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="1090.0" y="2319.75" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="13" font-weight="normal">Обновление времени</text>
+<text x="1090.0" y="2336.0" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">последнего обнаружения</text>
+<text x="1090.0" y="2352.25" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">отметка состояния seen</text>
+<polyline points="570.0,2178.0 380,2178.0 380,2292" fill="none" stroke="#000000" stroke-width="2" marker-end="url(#ah)"/>
+<text x="524.0" y="2166.0" font-family="Arial, sans-serif" font-size="12" font-weight="bold">да</text>
+<polyline points="1090.0,2178.0 1160,2178.0 1160,2292" fill="none" stroke="#000000" stroke-width="2" marker-end="url(#ah)"/>
+<text x="1106.0" y="2166.0" font-family="Arial, sans-serif" font-size="12" font-weight="bold">нет</text>
+<rect x="550.0" y="2440" width="560" height="56" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="830.0" y="2468.0" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="13" font-weight="normal">Переход к следующему порту</text>
+<polyline points="380,2380 380,2468 550.0,2468" fill="none" stroke="#000000" stroke-width="2" marker-end="url(#ah)"/>
+<polyline points="1160,2380 1160,2468 1110.0,2468" fill="none" stroke="#000000" stroke-width="2" marker-end="url(#ah)"/>
+<polygon points="830.0,2556 1090.0,2610.0 830.0,2664 570.0,2610.0" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="830.0" y="2610.0" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="12" font-weight="normal">Все порты обработаны?</text>
+<line x1="830" y1="2496" x2="830" y2="2556" stroke="#000000" stroke-width="2" marker-end="url(#ah)"/>
+<polygon points="830.0,2724 1090.0,2778.0 830.0,2832 570.0,2778.0" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="830.0" y="2770.5" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="12" font-weight="normal">Список новых</text>
+<text x="830.0" y="2785.5" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="12" font-weight="normal">портов не пуст?</text>
+<line x1="830" y1="2664" x2="830" y2="2724" stroke="#000000" stroke-width="2" marker-end="url(#ah)"/>
+<rect x="550.0" y="2892" width="560" height="124" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="830.0" y="2921.5" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Отправка уведомления владельцу</text>
+<text x="830.0" y="2937.75" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">формирование текста сообщения</text>
+<text x="830.0" y="2954.0" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">адрес, порт, протокол, продукт и версия службы</text>
+<text x="830.0" y="2970.25" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">POST к Telegram Bot API (sendMessage)</text>
+<text x="830.0" y="2986.5" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">ограничение времени ожидания 30 секунд</text>
+<line x1="830" y1="2832" x2="830" y2="2892" stroke="#000000" stroke-width="2" marker-end="url(#ah)"/>
+<text x="842" y="2858" font-family="Arial, sans-serif" font-size="12" font-weight="bold">да</text>
+<path d="M 550.0 3066 L 1110.0 3066 L 1110.0 3134.64 Q 970.0 3153.36 830.0 3139.32 Q 690.0 3129.024 550.0 3134.64 Z" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="830.0" y="3093.755" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="13" font-weight="normal">Запись итогов цикла в журнал</text>
+<text x="830.0" y="3110.005" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="11" font-weight="normal">количество новых и общее количество портов</text>
+<line x1="830" y1="3016" x2="830" y2="3066" stroke="#000000" stroke-width="2" marker-end="url(#ah)"/>
+<polygon points="830.0,3226 1090.0,3274.0 830.0,3322 570.0,3274.0" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="830.0" y="3274.0" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="12" font-weight="normal">Режим однократного запуска?</text>
+<line x1="830" y1="3144" x2="830" y2="3226" stroke="#000000" stroke-width="2" marker-end="url(#ah)"/>
+<rect x="550.0" y="3374" width="560" height="56" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="830.0" y="3402.0" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="13" font-weight="normal">Ожидание заданного интервала времени</text>
+<line x1="830" y1="3322" x2="830" y2="3374" stroke="#000000" stroke-width="2" marker-end="url(#ah)"/>
+<text x="842" y="3348" font-family="Arial, sans-serif" font-size="12" font-weight="bold">нет</text>
+<rect x="730" y="3466" width="200" height="50" rx="25.0" ry="25.0" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+<text x="830.0" y="3491.0" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Конец</text>
+<polyline points="570.0,2610.0 250,2610.0 250,1869 550.0,1869" fill="none" stroke="#000000" stroke-width="2" marker-end="url(#ah)"/>
+<text x="524.0" y="2598.0" font-family="Arial, sans-serif" font-size="12" font-weight="bold">нет</text>
+<polyline points="570.0,1534.0 190,1534.0 190,3105 550.0,3105" fill="none" stroke="#000000" stroke-width="2" marker-end="url(#ah)"/>
+<text x="524.0" y="1522.0" font-family="Arial, sans-serif" font-size="12" font-weight="bold">нет</text>
+<polyline points="1090.0,2778.0 1180,2778.0 1180,3105 1110.0,3105" fill="none" stroke="#000000" stroke-width="2" marker-end="url(#ah)"/>
+<text x="1106.0" y="2764.0" font-family="Arial, sans-serif" font-size="12" font-weight="bold">нет</text>
+<polyline points="550.0,3402 70,3402 70,883 550.0,883" fill="none" stroke="#000000" stroke-width="2" marker-end="url(#ah)"/>
+<text x="84" y="3392" font-family="Arial, sans-serif" font-size="12" font-weight="bold">новый цикл</text>
+<polyline points="1090.0,480.0 1390,480.0 1390,3461 1290,3461" fill="none" stroke="#000000" stroke-width="2" marker-end="url(#ah)"/>
+<text x="1106.0" y="468.0" font-family="Arial, sans-serif" font-size="12" font-weight="bold">нет</text>
+<polyline points="1090.0,1192.0 1340,1192.0 1340,3426 1290,3426" fill="none" stroke="#000000" stroke-width="2" marker-end="url(#ah)"/>
+<text x="1106.0" y="1180.0" font-family="Arial, sans-serif" font-size="12" font-weight="bold">нет</text>
+<polyline points="1090.0,3274 1290,3274 1290,3491 930,3491" fill="none" stroke="#000000" stroke-width="2" marker-end="url(#ah)"/>
+<text x="1106.0" y="3262" font-family="Arial, sans-serif" font-size="12" font-weight="bold">да</text>
+<text x="70" y="3600" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Примечания:</text>
+<text x="70" y="3624" font-family="Arial, sans-serif" font-size="12" fill="#333333">1. Сравнение с результатами предыдущих сканирований обеспечивается ограничением уникальности UNIQUE (ip, port, proto) и системным столбцом xmax:</text>
+<text x="70" y="3646" font-family="Arial, sans-serif" font-size="12" fill="#333333">     значение xmax = 0 соответствует строке, вставленной впервые, то есть ранее не обнаруженному порту (новой угрозе).</text>
+<text x="70" y="3668" font-family="Arial, sans-serif" font-size="12" fill="#333333">2. Уведомление формируется только для впервые обнаруженных портов, что исключает повторные сообщения об одних и тех же портах.</text>
+<text x="70" y="3690" font-family="Arial, sans-serif" font-size="12" fill="#333333">3. Прерывание по сигналам SIGINT и SIGTERM отменяет контекст: дочерние процессы завершаются, соединения с базой данных закрываются.</text>
+<text x="70" y="3712" font-family="Arial, sans-serif" font-size="12" fill="#333333">4. Ошибка обработки отдельного узла или порта не прерывает цикл сканирования в целом.</text>
+</svg>

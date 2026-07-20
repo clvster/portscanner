@@ -3,7 +3,9 @@ scan:
     - "172.18.0.0/24"
   ports: "22,80,443,6379,5432"
   rate: 1000
+  source_ip: "172.18.0.200"
   once: true
+  interval: "30s"
 
 database:
   dsn: "postgres://scanner:scanner@db:5432/portscanner?sslmode=disable"
